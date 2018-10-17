@@ -20,7 +20,7 @@ void printBits(size_t const size, void const * const ptr)
 
 int main(int argv, char* argc[])
 {
-        int i = ~2;
+        char i = ~2;
         unsigned int ui = UINT_MAX;
         float f = 23.45f;
         printBits(sizeof(i), &i);

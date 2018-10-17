@@ -228,7 +228,20 @@ int io61_seek(io61_file* f, off_t off) {
 
 // Efficient seek
 int io61_seek(io61_file* f, off_t off) {
-    if (off >= f->tag && off <= f->tag) {
-
+    if (off >= f->tag && off <= f->end_tag) {
+    	f->pos_tag = off;
+    	return 0;
+    }
+    else{
+    	off_t aligned_off = off - (off % BUFSIZ);
+    	off_t r = lseek(f->fd, aligned_off, SEEK_SET);
+    	if (r == aligned_off){
+    		f->tag = f->end_tag = aligned_off;
+    		f->pos_tag = off;
+    		return 0;
+    	}
+    	else{
+    		return -1;
+    	}
     }
 }
